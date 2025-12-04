@@ -31,6 +31,12 @@ const stealth = StealthPlugin();
 
 // Trying to find memory leak culprits
 stealth.enabledEvasions.delete("navigator.languages"); // Calls many experimental methods in workers
+stealth.enabledEvasions.delete("webgl.vendor");
+stealth.enabledEvasions.delete("media.codecs");
+stealth.enabledEvasions.delete("navigator.hardwareConcurrency");
+stealth.enabledEvasions.delete("navigator.languages");
+stealth.enabledEvasions.delete("navigator.permissions");
+stealth.enabledEvasions.delete("navigator.plugins");
 
 puppeteer.use(stealth);
 
