@@ -140,10 +140,17 @@ export const getBrowser = async ({
     },
   };
 
-  // DISPLAY will be available in docker
-  launchParams.executablePath = process.env.DISPLAY
-    ? "/usr/bin/google-chrome"
-    : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+  // Set Chrome executable path based on platform
+  if (process.platform === "win32") {
+    launchParams.executablePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+  } else if (process.platform === "linux") {
+    // On Linux (Ubuntu 22.04), Chrome is typically at /usr/bin/google-chrome
+    // when installed via apt-get install google-chrome-stable
+    launchParams.executablePath = "/usr/bin/google-chrome";
+  } else {
+    // macOS fallback
+    launchParams.executablePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+  }
 
   // Use this to set the puppeteer timezone
   let timezone = "";
